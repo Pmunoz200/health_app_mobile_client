@@ -10,7 +10,7 @@ class GoogleFitDataService {
       List<HealthDataAccess> permissions, List<HealthDataType> types) async {
     bool? hasPermissions =
         await health.hasPermissions(types, permissions: permissions);
-    if (!hasPermissions!) {
+    if (hasPermissions?? false) {
       try {
         hasPermissions =
             await health.requestAuthorization(types, permissions: permissions);
@@ -18,7 +18,7 @@ class GoogleFitDataService {
         print("Exception in authorization: $error");
       }
     }
-    return hasPermissions!;
+    return hasPermissions ?? false;
   }
 
   Future<List<DefaultDataPoint>> fetchGoogleFitHealthData(
